@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colorado → Maine Road Trip · June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1410;
+    --paper:#f5efe3;
+    --card:#fffdf8;
+    --rust:#b5471f;
+    --pine:#2f4a3c;
+    --sky:#3a6b7e;
+    --gold:#c98a2b;
+    --line:#d9cdb8;
+    --muted:#6b6052;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Archivo',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.55;
+    background-image:
+      radial-gradient(circle at 15% 12%, rgba(201,138,43,.06), transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(47,74,60,.07), transparent 45%);
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    padding:5.5rem 1.5rem 4rem;
+    text-align:center;
+    border-bottom:3px solid var(--ink);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(90deg,transparent,transparent 38px,rgba(26,20,16,.04) 38px,rgba(26,20,16,.04) 40px);
+    pointer-events:none;
+  }
+  .kicker{
+    font-size:.8rem;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--rust);font-weight:700;margin-bottom:1.1rem;
+  }
+  .hero h1{
+    font-family:'Fraunces',serif;font-weight:900;
+    font-size:clamp(2.8rem,7vw,5.5rem);
+    line-height:.95;letter-spacing:-.02em;
+    margin-bottom:1.2rem;
+  }
+  .hero h1 .em{color:var(--rust);font-style:italic}
+  .hero .sub{
+    font-family:'Fraunces',serif;font-style:italic;
+    font-size:clamp(1.05rem,2.4vw,1.5rem);color:var(--muted);
+  }
+  .hero .meta{
+    margin-top:1.8rem;display:inline-flex;flex-wrap:wrap;gap:.6rem 1.4rem;
+    justify-content:center;font-size:.82rem;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:600;color:var(--pine);
+  }
+  .hero .meta span{position:relative;padding-left:1.1rem}
+  .hero .meta span::before{
+    content:"●";position:absolute;left:0;color:var(--gold);font-size:.6rem;top:.25em;
+  }
+
+  /* ---------- LAYOUT ---------- */
+  main{max-width:1100px;margin:0 auto;padding:3.5rem 1.25rem 5rem}
+
+  .day{
+    background:var(--card);
+    border:2px solid var(--ink);
+    border-radius:6px;
+    margin-bottom:2.75rem;
+    box-shadow:8px 8px 0 rgba(26,20,16,.12);
+    overflow:hidden;
+  }
+  .day-head{
+    display:flex;align-items:stretch;
+    border-bottom:2px solid var(--ink);
+    background:var(--pine);color:#f5efe3;
+  }
+  .day-num{
+    flex:0 0 auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:1.1rem 1.4rem;
+    background:var(--rust);
+    border-right:2px solid var(--ink);
+    min-width:108px;
+  }
+  .day-num .lbl{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;opacity:.85}
+  .day-num .n{font-family:'Fraunces',serif;font-weight:900;font-size:2.6rem;line-height:1}
+  .day-title{padding:1rem 1.4rem;display:flex;flex-direction:column;justify-content:center}
+  .day-title .date{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;opacity:.8;font-weight:600}
+  .day-title h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.2rem,2.6vw,1.7rem);line-height:1.1}
+  .day-title .drive{font-size:.8rem;margin-top:.25rem;opacity:.85}
+
+  .day-body{display:grid;grid-template-columns:1fr 1.15fr;gap:0}
+  @media(max-width:760px){.day-body{grid-template-columns:1fr}}
+
+  .leg{padding:1.6rem 1.6rem 1.8rem;border-right:2px solid var(--line)}
+  @media(max-width:760px){.leg{border-right:none;border-bottom:2px solid var(--line)}}
+
+  .timeline{position:relative;padding-left:1.5rem}
+  .timeline::before{
+    content:"";position:absolute;left:6px;top:8px;bottom:8px;width:2px;
+    background:repeating-linear-gradient(var(--gold),var(--gold) 5px,transparent 5px,transparent 10px);
+  }
+  .stop{position:relative;padding:0 0 1.15rem}
+  .stop:last-child{padding-bottom:0}
+  .stop::before{
+    content:"";position:absolute;left:-1.5rem;top:.35em;
+    width:13px;height:13px;border-radius:50%;
+    background:var(--card);border:2.5px solid var(--sky);
+  }
+  .stop.start::before{background:var(--pine);border-color:var(--pine)}
+  .stop.end::before{background:var(--rust);border-color:var(--rust)}
+  .stop .role{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+  .stop .name{font-weight:600;font-size:1.02rem}
+  .stop .note{font-size:.82rem;color:var(--muted)}
+  .stop a{color:var(--sky);text-decoration:none;border-bottom:1px solid var(--line);font-size:.82rem}
+  .stop a:hover{color:var(--rust)}
+
+  .hotel-card{
+    margin-top:1.3rem;padding:.85rem 1rem;
+    background:rgba(201,138,43,.1);
+    border:1px dashed var(--gold);border-radius:5px;
+    font-size:.85rem;
+  }
+  .hotel-card .h-lbl{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;font-weight:700;color:var(--gold);display:block;margin-bottom:.15rem}
+  .hotel-card a{color:var(--pine);font-weight:600;text-decoration:none}
+  .hotel-card a:hover{text-decoration:underline}
+
+  .map-wrap{position:relative;min-height:320px}
+  .map-wrap iframe{width:100%;height:100%;min-height:320px;border:0;display:block}
+  @media(max-width:760px){.map-wrap iframe{min-height:280px}}
+
+  .day.rest .day-num{background:var(--sky)}
+  .day.rest .day-head{background:var(--sky)}
+
+  /* ---------- SCHEDULE STRIP ---------- */
+  .sched{
+    border-bottom:2px solid var(--line);
+    background:rgba(58,107,126,.06);
+    padding:1rem 1.4rem 1.1rem;
+  }
+  .sched-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;
+  }
+  @media(max-width:480px){.sched-grid{grid-template-columns:repeat(2,1fr)}}
+  .sched-cell{text-align:center}
+  .sched-cell .s-lbl{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--muted);display:block}
+  .sched-cell .s-val{font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;line-height:1.1;color:var(--ink)}
+  .sched-cell .s-val.go{color:var(--pine)}
+  .sched-cell .s-val.in{color:var(--rust)}
+  .sched-meta{
+    display:flex;flex-wrap:wrap;gap:.5rem .9rem;align-items:center;
+    margin-top:.85rem;padding-top:.7rem;border-top:1px dashed var(--line);
+    font-size:.78rem;color:var(--muted);
+  }
+  .sched-meta .seg{white-space:nowrap}
+  .sched-meta .seg b{color:var(--ink);font-weight:600}
+  .tag{
+    font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+    padding:.22rem .6rem;border-radius:99px;color:#fff;
+  }
+  .tag.Easy{background:#3f7d5a}
+  .tag.Moderate{background:var(--sky)}
+  .tag.Long{background:var(--gold)}
+  .tag.Brutal{background:var(--rust)}
+  .tag.Rest{background:#7a8a6f}
+  .sched-note{font-size:.82rem;color:var(--muted);margin-top:.7rem;line-height:1.5}
+
+  /* ---------- MOBILE ---------- */
+  @media(max-width:640px){
+    header.hero{padding:3.25rem 1.1rem 2.5rem}
+    .kicker{font-size:.62rem;letter-spacing:.3em;margin-bottom:.7rem}
+    .hero h1{font-size:clamp(2.4rem,12vw,3.2rem)}
+    .hero .meta{gap:.4rem .9rem;font-size:.68rem;margin-top:1.2rem}
+
+    main{padding:2rem .9rem 3rem}
+
+    .day{
+      margin-bottom:1.6rem;
+      box-shadow:4px 4px 0 rgba(26,20,16,.12);
+      border-radius:5px;
+    }
+
+    /* stack the day header so the title never gets crushed */
+    .day-num{
+      flex-direction:row;gap:.5rem;align-items:baseline;
+      min-width:0;width:100%;
+      padding:.55rem 1rem;
+      border-right:none;border-bottom:2px solid var(--ink);
+      justify-content:flex-start;
+    }
+    .day-head{flex-direction:column}
+    .day-num .lbl{font-size:.6rem}
+    .day-num .n{font-size:1.5rem}
+    .day-title{padding:.8rem 1rem}
+    .day-title h2{font-size:1.25rem}
+
+    .sched{padding:.85rem 1rem .95rem}
+    .sched-grid{grid-template-columns:repeat(2,1fr);gap:.7rem .5rem}
+    .sched-cell .s-val{font-size:1.05rem}
+    .sched-meta{font-size:.72rem;gap:.4rem .7rem}
+    .sched-note{font-size:.8rem}
+
+    .leg{padding:1.2rem 1.1rem 1.4rem}
+    .stop .name{font-size:.96rem}
+
+    .map-wrap iframe{min-height:260px}
+
+    footer{padding:2rem 1.1rem 2.5rem}
+    footer .pass{font-size:.66rem;padding:.45rem .8rem;line-height:1.5}
+  }
+
+  @media(max-width:380px){
+    .hero h1{font-size:2.2rem}
+    .day-title h2{font-size:1.12rem}
+  }
+
+  /* prevent any iframe/box from forcing horizontal scroll */
+  iframe{max-width:100%}
+  .day,.sched,.leg{overflow-wrap:break-word}
+
+  footer{
+    text-align:center;padding:2.5rem 1.5rem 3.5rem;
+    border-top:3px solid var(--ink);
+    font-size:.8rem;color:var(--muted);letter-spacing:.04em;
+  }
+  footer .pass{
+    display:inline-block;margin-bottom:1rem;padding:.5rem 1.1rem;
+    background:var(--rust);color:#f5efe3;border-radius:3px;
+    font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="kicker">Summer 2026 · Cross-Country</div>
+  <h1>Colorado <span class="em">to</span> Maine</h1>
+  <p class="sub">Nine days, two borders, the long way home.</p>
+  <div class="meta">
+    <span>June 20 – 28</span>
+    <span>~3,000 miles</span>
+    <span>Leadville → Portland</span>
+  </div>
+</header>
+
+<main id="days">
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">1</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Saturday · June 20</span>
+        <h2>Leadville → Rapid City</h2>
+        <span class="drive">≈ 8 hrs driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">7:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">8:15 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~7:00 PM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Long">Long</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 8h00</span>
+        <span class="seg"><b>Stops/parks:</b> +2h45</span>
+        <span class="seg"><b>Time zone:</b> All Mountain Time</span>
+      </div>
+      <div class="sched-note">8h driving + 2 gas stops + lunch + ~1.5h at Mount Rushmore. With a relaxed start you'll hit Rushmore around 5 PM (still plenty of daylight in June), then a quick 40-min hop to the hotel for a ~7 PM arrival.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Leadville, CO</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Stop</div>
+          <div class="name">Mount Rushmore National Memorial</div>
+          <div class="note">Iconic granite stop</div>
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">DoubleTree by Hilton Rapid City</div>
+          <div class="note">505 N 5th St, Rapid City, SD</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.hilton.com/en/hotels/rapdcdt-doubletree-rapid-city-downtown-convention-center/" target="_blank" rel="noopener">DoubleTree by Hilton Rapid City Downtown ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Leadville%2C%20CO&destination=DoubleTree%20by%20Hilton%20Rapid%20City%20Downtown%20Convention%20Center%2C%20505%20N%205th%20St%2C%20Rapid%20City%2C%20SD%2057701&waypoints=Mount%20Rushmore%20National%20Memorial&mode=driving" title="Day 1 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">2</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Sunday · June 21</span>
+        <h2>Rapid City → Bloomington</h2>
+        <span class="drive">≈ 8 hrs 25 min driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">7:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">8:15 AM MT</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~9:15 PM CT</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Brutal">Brutal</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 8h25</span>
+        <span class="seg"><b>Stops/parks:</b> +3h30</span>
+        <span class="seg"><b>Time zone:</b> Lose 1h → Central</span>
+      </div>
+      <div class="sched-note">Badlands ~1h from the hotel — explore ~2h, then the big 7.5h push to Bloomington with 2–3 gas stops + lunch. The hour lost crossing into Central Time lands you near 9:15 PM. If that feels too late, trim Badlands to ~1h or shave the morning to an 8:00 depart.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">DoubleTree by Hilton Rapid City</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Stop</div>
+          <div class="name">Badlands National Park</div>
+          <div class="note">Rugged buttes & spires</div>
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">Hilton Minneapolis/Bloomington</div>
+          <div class="note">3900 American Blvd W, Bloomington, MN</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.hilton.com/en/hotels/mspbwhf-hilton-minneapolis-bloomington/" target="_blank" rel="noopener">Hilton Minneapolis/Bloomington ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=DoubleTree%20by%20Hilton%20Rapid%20City%20Downtown%20Convention%20Center%2C%20505%20N%205th%20St%2C%20Rapid%20City%2C%20SD&destination=Hilton%20Minneapolis%2FBloomington%2C%203900%20American%20Blvd%20W%2C%20Bloomington%2C%20MN%2055437&waypoints=Badlands%20National%20Park&mode=driving" title="Day 2 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">3</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Monday · June 22</span>
+        <h2>Bloomington → Sault Ste. Marie</h2>
+        <span class="drive">≈ 9 hrs driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">7:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">8:15 AM CT</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~10:15 PM ET</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Brutal">Brutal</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 9h00</span>
+        <span class="seg"><b>Stops/parks:</b> +3h30</span>
+        <span class="seg"><b>Time zone:</b> Lose 1h → Eastern</span>
+      </div>
+      <div class="sched-note">The hardest day, and the one a late start hits worst. 9h driving + gas + lunch + the Canada border + an hour lost to Eastern Time. Even skipping Pictured Rocks, an 8:15 depart puts you at the hotel near 10:15 PM. Realistic options: (1) accept the late check-in — call Delta ahead to confirm; (2) skip Pictured Rocks to claw back ~2h; or (3) the one day worth an earlier ~7:00 start. Sunset is ~9:30 PM up here, so most of the drive is still in daylight.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Hilton Minneapolis/Bloomington</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Stop</div>
+          <div class="name">Pictured Rocks National Lakeshore</div>
+          <div class="note">Lake Superior cliffs</div>
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">Delta Hotels Sault Ste. Marie Waterfront</div>
+          <div class="note">208 St Mary's River Dr, ON 🛂 border</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.marriott.com/en-us/hotels/yamds-delta-hotels-sault-ste-marie-waterfront/overview/" target="_blank" rel="noopener">Delta Hotels Sault Ste. Marie Waterfront ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Hilton%20Minneapolis%2FBloomington%2C%203900%20American%20Blvd%20W%2C%20Bloomington%2C%20MN&destination=Delta%20Hotels%20Sault%20Ste.%20Marie%20Waterfront%2C%20208%20St%20Mary's%20River%20Dr%2C%20Sault%20Ste.%20Marie%2C%20ON&waypoints=Pictured%20Rocks%20National%20Lakeshore&mode=driving" title="Day 3 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">4</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Tuesday · June 23</span>
+        <h2>Sault Ste. Marie → Bruce Peninsula</h2>
+        <span class="drive">≈ 8 hrs 23 min driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">7:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">8:15 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~7:30 PM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Long">Long</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 8h23</span>
+        <span class="seg"><b>Stops/parks:</b> +2h45</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">~7h to the tip of the peninsula (Tobermory / the Grotto), explore ~1.5h, then backtrack ~1.5h south to Port Elgin. 2 gas stops + lunch folded in. No time-zone change, so an 8:15 start still gets you in by ~7:30 PM.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Delta Hotels Sault Ste. Marie Waterfront</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Stop</div>
+          <div class="name">Bruce Peninsula National Park</div>
+          <div class="note">Grotto & Georgian Bay</div>
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">Staybridge Suites Port Elgin</div>
+          <div class="note">1208 Goderich St, Port Elgin, ON</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.ihg.com/staybridge/hotels/us/en/port-elgin/yyzpe/hoteldetail" target="_blank" rel="noopener">Staybridge Suites Port Elgin by IHG ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Delta%20Hotels%20Sault%20Ste.%20Marie%20Waterfront%2C%20208%20St%20Mary's%20River%20Dr%2C%20Sault%20Ste.%20Marie%2C%20ON&destination=Staybridge%20Suites%20Port%20Elgin%2C%201208%20Goderich%20St%2C%20Port%20Elgin%2C%20ON&waypoints=Bruce%20Peninsula%20National%20Park%2C%20ON&mode=driving" title="Day 4 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day rest">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">5</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Wednesday · June 24</span>
+        <h2>Explore the Peninsula</h2>
+        <span class="drive">Rest day · local exploring</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">Sleep in</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">Whenever</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">—</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Rest">Rest</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> ~20 min each way</span>
+        <span class="seg"><b>Stops/parks:</b> —</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">No schedule pressure. Sauble Beach is ~20 min from the hotel. Good day to recover from the three long driving days and optionally revisit Bruce Peninsula at a relaxed pace.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Base</div>
+          <div class="name">Staybridge Suites Port Elgin</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Explore</div>
+          <div class="name">Sauble Beach</div>
+          <div class="note">Sandy Lake Huron shoreline</div>
+        </div>
+        <div class="stop end">
+          <div class="role">Return</div>
+          <div class="name">Staybridge Suites Port Elgin</div>
+          
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.ihg.com/staybridge/hotels/us/en/port-elgin/yyzpe/hoteldetail" target="_blank" rel="noopener">Staybridge Suites Port Elgin by IHG ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Staybridge%20Suites%20Port%20Elgin%2C%201208%20Goderich%20St%2C%20Port%20Elgin%2C%20ON&destination=Staybridge%20Suites%20Port%20Elgin%2C%201208%20Goderich%20St%2C%20Port%20Elgin%2C%20ON&waypoints=Sauble%20Beach%2C%20ON&mode=driving" title="Day 5 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">6</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Thursday · June 25</span>
+        <h2>Port Elgin → Ottawa</h2>
+        <span class="drive">≈ 7 hrs driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">8:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">9:15 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~5:30 PM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Moderate">Moderate</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 7h00</span>
+        <span class="seg"><b>Stops/parks:</b> +1h15</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">Straight shot east, no major attraction stop. 2 gas/coffee stops + lunch. Relaxed 9:15 start lands you in Ottawa around 5:30 PM.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Staybridge Suites Port Elgin</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Stop</div>
+          <div class="name">Bruce Peninsula National Park (depart)</div>
+          <div class="note">Heading east</div>
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">Fairmont Château Laurier</div>
+          <div class="note">1 Rideau St, Ottawa, ON</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.fairmont.com/en/hotels/ottawa/fairmont-chateau-laurier.html" target="_blank" rel="noopener">Fairmont Château Laurier ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Staybridge%20Suites%20Port%20Elgin%2C%201208%20Goderich%20St%2C%20Port%20Elgin%2C%20ON&destination=Fairmont%20Ch%C3%A2teau%20Laurier%2C%201%20Rideau%20St%2C%20Ottawa%2C%20ON&mode=driving" title="Day 6 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">7</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Friday · June 26</span>
+        <h2>Ottawa → Montréal</h2>
+        <span class="drive">≈ 2 hrs driving</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">Sleep in</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">~10:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~1:30 PM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Easy">Easy</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 2h00</span>
+        <span class="seg"><b>Stops/parks:</b> +30 min</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">Shortest driving day. Sleep in, grab breakfast in Ottawa, easy 2h drive with one coffee stop. Early-afternoon arrival means a full afternoon and evening in Montréal.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Fairmont Château Laurier, Ottawa</div>
+          
+        </div>
+        <div class="stop end">
+          <div class="role">End / Overnight</div>
+          <div class="name">Hôtel Monville</div>
+          <div class="note">1041 Rue de Bleury, Montréal, QC</div>
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.hotelmonville.com/en/" target="_blank" rel="noopener">Hôtel Monville ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=Fairmont%20Ch%C3%A2teau%20Laurier%2C%201%20Rideau%20St%2C%20Ottawa%2C%20ON&destination=H%C3%B4tel%20Monville%2C%201041%20Rue%20de%20Bleury%2C%20Montr%C3%A9al%2C%20QC&mode=driving" title="Day 7 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day rest">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">8</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Saturday · June 27</span>
+        <h2>Explore Montréal</h2>
+        <span class="drive">Rest day · city exploring</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">Sleep in</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">Whenever</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">—</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Rest">Rest</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> None</span>
+        <span class="seg"><b>Stops/parks:</b> —</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">Full rest day in Montréal. No driving. Explore Old Montréal on foot — and rest up before the final border run to Maine.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Base</div>
+          <div class="name">Hôtel Monville</div>
+          
+        </div>
+        <div class="stop ">
+          <div class="role">Explore</div>
+          <div class="name">Old Montréal & Downtown</div>
+          <div class="note">Walk the cobblestones</div>
+        </div>
+        <div class="stop end">
+          <div class="role">Return</div>
+          <div class="name">Hôtel Monville</div>
+          
+        </div></div>
+        
+        <div class="hotel-card">
+          <span class="h-lbl">Overnight</span>
+          <a href="https://www.hotelmonville.com/en/" target="_blank" rel="noopener">Hôtel Monville ↗</a>
+        </div>
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=H%C3%B4tel%20Monville%2C%201041%20Rue%20de%20Bleury%2C%20Montr%C3%A9al%2C%20QC&destination=H%C3%B4tel%20Monville%2C%201041%20Rue%20de%20Bleury%2C%20Montr%C3%A9al%2C%20QC&waypoints=Old%20Montreal%2C%20Montreal%2C%20QC&mode=driving" title="Day 8 route"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="day">
+    <div class="day-head">
+      <div class="day-num">
+        <span class="lbl">Day</span>
+        <span class="n">9</span>
+      </div>
+      <div class="day-title">
+        <span class="date">Sunday · June 28</span>
+        <h2>Montréal → Portland</h2>
+        <span class="drive">≈ 5 hrs driving 🛂</span>
+      </div>
+    </div>
+    
+    <div class="sched">
+      <div class="sched-grid">
+        <div class="sched-cell"><span class="s-lbl">Wake</span><span class="s-val">8:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Depart</span><span class="s-val go">9:30 AM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Arrive</span><span class="s-val in">~4:30 PM</span></div>
+        <div class="sched-cell"><span class="s-lbl">Difficulty</span><span class="s-val"><span class="tag Moderate">Moderate</span></span></div>
+      </div>
+      <div class="sched-meta">
+        <span class="seg"><b>Drive (Google):</b> 5h00</span>
+        <span class="seg"><b>Stops/parks:</b> +2h00</span>
+        <span class="seg"><b>Time zone:</b> All Eastern</span>
+      </div>
+      <div class="sched-note">5h driving + 1–2 gas stops + lunch + ~45 min buffer for the US border crossing south of Montréal. Relaxed start, in Portland by late afternoon.</div>
+    </div>
+    <div class="day-body">
+      <div class="leg">
+        <div class="timeline">
+        <div class="stop start">
+          <div class="role">Start</div>
+          <div class="name">Hôtel Monville, Montréal</div>
+          
+        </div>
+        <div class="stop end">
+          <div class="role">End</div>
+          <div class="name">Portland, ME</div>
+          <div class="note">Journey's end — back in the USA</div>
+        </div></div>
+        
+      </div>
+      <div class="map-wrap">
+        <iframe loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA4HrWI6h1Y56W9_t2uc9AnpAtC-NP0bwg&origin=H%C3%B4tel%20Monville%2C%201041%20Rue%20de%20Bleury%2C%20Montr%C3%A9al%2C%20QC&destination=Portland%2C%20ME&mode=driving" title="Day 9 route"></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span class="pass">🛂 Bring passports — border crossing at Sault Ste. Marie & Quebec/Maine</span>
+  <div>Itinerary built June 2026 · Live Google Maps route for each day</div>
+</footer>
+
+
+</body>
+</html>
